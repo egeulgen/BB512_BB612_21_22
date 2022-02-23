@@ -28,7 +28,7 @@ HW
 2022-03-03
 </td>
 <td style="text-align:left;">
-Introduction
+<a href="https://github.com/egeulgen/BB512_BB612_21_22/blob/main/lectures/1.intro.pdf" style="     ">Introduction</a>
 </td>
 <td style="text-align:left;">
 </td>
