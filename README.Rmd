@@ -1,0 +1,37 @@
+---
+title: "BB512/BB612 - Special Topics in Biostatistics and Bioinformatics - Spring 2022"
+output: github_document
+always_allow_html: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r schedule, echo=FALSE}
+suppressMessages(sched_df <- readxl::read_excel("misc/lectures.xlsx"))
+
+sched_df$Slides <- sched_df$`R script` <- NULL
+colnames(sched_df)[4] <- "HW"
+sched_df$HW[is.na(sched_df$HW)] <- ""
+
+# function for creating link
+link_to_file <- function(text, rel_path) {
+    URL <- paste0("https://github.com/egeulgen/BB503_BB602_21_22/blob/main/", rel_path)
+    new_text <- kableExtra::cell_spec(text, "html", link = URL)
+    return(new_text)
+}
+
+# links to HWs
+# sched_df$HW[3] <- link_to_file(sched_df$HW[3], "Homeworks/HW1.pdf")
+
+# links to lectures
+# sched_df$Subject[1] <- link_to_file(sched_df$Subject[1], "lectures/1.descriptive.pdf")
+
+# links to R exercises
+# sched_df$R <- ""
+# sched_df$R[1] <- link_to_file("Intro", "scripts/1.intro.R")
+
+kableExtra::row_spec(kableExtra::row_spec(knitr::kable(sched_df, format = "html", escape = FALSE), which(grepl("Midterm", sched_df$Subject)), bold = TRUE, background = "#F4B41A"), nrow(sched_df), bold = TRUE, background = "#E2725A")
+
+```
