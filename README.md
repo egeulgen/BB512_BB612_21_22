@@ -54,7 +54,7 @@ Exploratory Data Analysis
 2022-03-17
 </td>
 <td style="text-align:left;">
-Dimension Reduction/Preprocessing and Normalization
+Clustering/Dimensionality Reduction
 </td>
 <td style="text-align:left;">
 HW1
