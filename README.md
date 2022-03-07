@@ -17,6 +17,9 @@ Subject
 <th style="text-align:left;">
 HW
 </th>
+<th style="text-align:left;">
+R
+</th>
 </tr>
 </thead>
 <tbody>
@@ -32,6 +35,8 @@ HW
 </td>
 <td style="text-align:left;">
 </td>
+<td style="text-align:left;">
+</td>
 </tr>
 <tr>
 <td style="text-align:right;">
@@ -41,9 +46,13 @@ HW
 2022-03-10
 </td>
 <td style="text-align:left;">
-Exploratory Data Analysis
+<a href="https://github.com/egeulgen/BB512_BB612_21_22K/blob/main/lectures/2.EDA.pdf" style="     ">Exploratory
+Data Analysis</a>
 </td>
 <td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+<a href="https://github.com/egeulgen/BB512_BB612_21_22K/blob/main/scripts/2.EDA.pdf" style="     ">EDA</a>
 </td>
 </tr>
 <tr>
@@ -59,6 +68,8 @@ Clustering/Dimensionality Reduction
 <td style="text-align:left;">
 HW1
 </td>
+<td style="text-align:left;">
+</td>
 </tr>
 <tr>
 <td style="text-align:right;">
@@ -72,6 +83,8 @@ Review of HW1
 </td>
 <td style="text-align:left;">
 </td>
+<td style="text-align:left;">
+</td>
 </tr>
 <tr>
 <td style="text-align:right;">
@@ -82,6 +95,8 @@ Review of HW1
 </td>
 <td style="text-align:left;">
 Batch Effects and Confounders
+</td>
+<td style="text-align:left;">
 </td>
 <td style="text-align:left;">
 </td>
@@ -99,6 +114,8 @@ Inference
 <td style="text-align:left;">
 HW2
 </td>
+<td style="text-align:left;">
+</td>
 </tr>
 <tr>
 <td style="text-align:right;">
@@ -112,6 +129,8 @@ Review of HW2
 </td>
 <td style="text-align:left;">
 </td>
+<td style="text-align:left;">
+</td>
 </tr>
 <tr>
 <td style="text-align:right;">
@@ -122,6 +141,8 @@ Review of HW2
 </td>
 <td style="text-align:left;">
 Gene Set Enrichment
+</td>
+<td style="text-align:left;">
 </td>
 <td style="text-align:left;">
 </td>
@@ -139,6 +160,8 @@ Gene Expression Analysis
 <td style="text-align:left;">
 HW3
 </td>
+<td style="text-align:left;">
+</td>
 </tr>
 <tr>
 <td style="text-align:right;">
@@ -149,6 +172,8 @@ HW3
 </td>
 <td style="text-align:left;">
 Review of HW3
+</td>
+<td style="text-align:left;">
 </td>
 <td style="text-align:left;">
 </td>
@@ -166,6 +191,8 @@ Next Generation Genomics Sequencing Analysis
 <td style="text-align:left;">
 Final project
 </td>
+<td style="text-align:left;">
+</td>
 </tr>
 <tr>
 <td style="text-align:right;">
@@ -176,6 +203,8 @@ Final project
 </td>
 <td style="text-align:left;">
 National Holiday
+</td>
+<td style="text-align:left;">
 </td>
 <td style="text-align:left;">
 </td>
@@ -192,6 +221,8 @@ No Class
 </td>
 <td style="text-align:left;">
 </td>
+<td style="text-align:left;">
+</td>
 </tr>
 <tr>
 <td style="text-align:right;font-weight: bold;background-color: #E2725A !important;">
@@ -202,6 +233,8 @@ No Class
 </td>
 <td style="text-align:left;font-weight: bold;background-color: #E2725A !important;">
 Review of Final Projects
+</td>
+<td style="text-align:left;font-weight: bold;background-color: #E2725A !important;">
 </td>
 <td style="text-align:left;font-weight: bold;background-color: #E2725A !important;">
 </td>
