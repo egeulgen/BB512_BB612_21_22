@@ -30,7 +30,7 @@ fdata <- fData(bm) # features data
 We'll first explore the phenotype data:
 
 ```{r p_eda1}
-head(pdata,3)
+head(pdata, 3)
 ```
 
 ```{r p_eda2}
@@ -91,7 +91,7 @@ par(mfrow = c(1, 1))
 ### or with densinty plots
 plot(density(log2(edata[, 1] + 1)), col = "red")
 for (i in 2:ncol(edata)) {
-    lines(density(log2(edata[, 2] + 1)), col = "red")
+    lines(density(log2(edata[, i] + 1)), col = "red")
 }
 ```
 
