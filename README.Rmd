@@ -23,15 +23,17 @@ link_to_file <- function(text, rel_path) {
 }
 
 # links to HWs
-# sched_df$HW[3] <- link_to_file(sched_df$HW[3], "Homeworks/HW1.pdf")
+sched_df$HW[3] <- link_to_file(sched_df$HW[3], "Homeworks/HW1.pdf")
 
 # links to lectures
 sched_df$Subject[1] <- link_to_file(sched_df$Subject[1], "lectures/1.intro.pdf")
 sched_df$Subject[2] <- link_to_file(sched_df$Subject[2], "lectures/2.EDA.pdf")
+sched_df$Subject[3] <- link_to_file(sched_df$Subject[3], "lectures/3.dim_reduction.pdf")
 
 # links to R exercises
 sched_df$R <- ""
 sched_df$R[2] <- link_to_file("EDA", "scripts/2.EDA.pdf")
+sched_df$R[3] <- link_to_file("EDA", "scripts/3.Clustering_PCA.pdf")
 
 kableExtra::row_spec(kableExtra::row_spec(knitr::kable(sched_df, format = "html", escape = FALSE), which(grepl("Midterm", sched_df$Subject)), bold = TRUE, background = "#F4B41A"), nrow(sched_df), bold = TRUE, background = "#E2725A")
 

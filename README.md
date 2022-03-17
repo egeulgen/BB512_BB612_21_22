@@ -63,12 +63,14 @@ Data Analysis</a>
 2022-03-17
 </td>
 <td style="text-align:left;">
-Clustering/Dimensionality Reduction
+<a href="https://github.com/egeulgen/BB512_BB612_21_22K/blob/main/lectures/3.dim_reduction.pdf" style="     ">Clustering/Dimensionality
+Reduction</a>
 </td>
 <td style="text-align:left;">
-HW1
+<a href="https://github.com/egeulgen/BB512_BB612_21_22K/blob/main/Homeworks/HW1.pdf" style="     ">HW1</a>
 </td>
 <td style="text-align:left;">
+<a href="https://github.com/egeulgen/BB512_BB612_21_22K/blob/main/scripts/3.Clustering_PCA.pdf" style="     ">EDA</a>
 </td>
 </tr>
 <tr>
