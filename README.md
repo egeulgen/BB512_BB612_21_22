@@ -70,7 +70,7 @@ Reduction</a>
 <a href="https://github.com/egeulgen/BB512_BB612_21_22K/blob/main/Homeworks/HW1.pdf" style="     ">HW1</a>
 </td>
 <td style="text-align:left;">
-<a href="https://github.com/egeulgen/BB512_BB612_21_22K/blob/main/scripts/3.Clustering_PCA.pdf" style="     ">EDA</a>
+<a href="https://github.com/egeulgen/BB512_BB612_21_22K/blob/main/scripts/3.Clustering_PCA.pdf" style="     ">Clustering</a>
 </td>
 </tr>
 <tr>
@@ -97,11 +97,13 @@ of HW1</a>
 2022-03-31
 </td>
 <td style="text-align:left;">
-Batch Effects and Confounders
+<a href="https://github.com/egeulgen/BB512_BB612_21_22K/blob/main/lectures/5.batch.pdf" style="     ">Batch
+Effects and Confounders</a>
 </td>
 <td style="text-align:left;">
 </td>
 <td style="text-align:left;">
+<a href="https://github.com/egeulgen/BB512_BB612_21_22K/blob/main/scripts/5.BatchEffects.pdf" style="     ">Batch</a>
 </td>
 </tr>
 <tr>
