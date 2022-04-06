@@ -114,12 +114,13 @@ Effects and Confounders</a>
 2022-04-07
 </td>
 <td style="text-align:left;">
-Inference
+<a href="https://github.com/egeulgen/BB512_BB612_21_22K/blob/main/lectures/6.inference.pdf" style="     ">Inference</a>
 </td>
 <td style="text-align:left;">
-HW2
+<a href="https://github.com/egeulgen/BB512_BB612_21_22K/blob/main/Homeworks/HW2.pdf" style="     ">HW2</a>
 </td>
 <td style="text-align:left;">
+<a href="https://github.com/egeulgen/BB512_BB612_21_22K/blob/main/scripts/6.Inference.pdf" style="     ">Inference</a>
 </td>
 </tr>
 <tr>

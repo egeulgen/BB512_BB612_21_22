@@ -1,0 +1,119 @@
+---
+title: "BB512/BB612 - Week VI"
+output: pdf_document
+---
+
+```{r}
+suppressPackageStartupMessages(library(Biobase))
+suppressPackageStartupMessages(library(bladderbatch))
+suppressPackageStartupMessages(library(sva))
+```
+
+# Data
+
+We are going to use data from the paper [Evaluating gene expression in C57BL/6J and DBA/2J mouse striatum using RNA-Seq and microarrays](http://www.ncbi.nlm.nih.gov/pubmed?term=21455293). that is a comparative RNA-seq analysis of different mouse strains.
+
+```{r data}
+con <- url("http://bowtie-bio.sourceforge.net/recount/ExpressionSets/bottomly_eset.RData")
+load(file = con)
+close(con)
+
+pdata <- pData(bottomly.eset)
+edata <- as.matrix(exprs(bottomly.eset))
+fdata <- fData(bottomly.eset)
+```
+
+Transform the expression data and remove lowly expressed genes:
+```{r data_tr}
+edata <- log2(as.matrix(edata) + 1)
+edata <- edata[rowMeans(edata) > 10, ]
+```
+
+```{r}
+head(pdata)
+
+table(pdata$strain)
+```
+
+# Calculate p-values parametrically
+
+## t-test
+
+```{r paramet}
+idxA <- which(colnames(edata) %in% pdata$sample.id[pdata$strain == "C57BL/6J"])
+idxB <- which(colnames(edata) %in% pdata$sample.id[pdata$strain == "DBA/2J"])
+raw_p_vals <- apply(edata, 1, function(x) t.test(x[idxA], x[idxB])$p.value)
+p_vals <- sort(raw_p_vals)
+head(p_vals, 10)
+
+
+
+p_adj_vals <- p.adjust(p_vals, method = "fdr")
+head(p_adj_vals, 10)
+
+hist(p_vals)
+```
+
+## Adjusting for variables with `edge`
+
+```{r edge}
+devtools::install_github("jdstorey/edge")
+library(edge)
+
+edge_study <- build_study(edata, grp = pdata$strain, 
+                          adj.var = as.factor(pdata$lane.number))
+de_obj <- lrt(edge_study)
+qval <- qvalueObj(de_obj)
+hist(qval$pvalues)
+```
+
+## Using moderated statistics with limma
+
+```{r limma}
+library(limma)
+
+mod <- model.matrix(~ pdata$strain + pdata$lane.number)
+fit_limma <- lmFit(edata, mod)
+ebayes_limma <- eBayes(fit_limma)
+limma_pvals <- topTable(ebayes_limma, number = Inf)$P.Value
+hist(limma_pvals)
+```
+
+# Calculating empirical permutation p-values
+
+```{r permutation}
+idxA <- which(colnames(edata) %in% pdata$sample.id[pdata$strain == "C57BL/6J"])
+idxB <- which(colnames(edata) %in% pdata$sample.id[pdata$strain == "DBA/2J"])
+
+actual_diffs <- apply(edata, 1, function(x) mean(x[idxA]) - mean(x[idxB]))
+
+B <- 1000
+perm_res <- c()
+set.seed(123)
+for (i in seq_len(B)) {
+    cur_idxA <- sample(seq_len(ncol(edata)), 10)
+    cur_idxB <- setdiff(seq_len(ncol(edata)), cur_idxA)
+    cur_diffs <- apply(edata, 1, function(x) mean(x[cur_idxA]) - mean(x[cur_idxB]))
+    perm_res <- rbind(perm_res, cur_diffs)
+}
+
+hist(perm_res[, 1])
+abline(v = actual_diffs[1], col = "red", lwd = 2)
+
+# empirical p value
+sum(perm_res[, 1] <= actual_diffs[1]) / B
+
+empirical_p <- c()
+for (j in 1:ncol(perm_res)) {
+    if (actual_diffs[j] < 0) {
+        empirical_p <- c(empirical_p, 2 * sum(perm_res[, j] <= actual_diffs[j]) / B)
+    } else {
+        empirical_p <- c(empirical_p, 2 *sum(perm_res[, j] >= actual_diffs[j]) / B)
+    }
+}
+
+hist(empirical_p)
+
+plot(raw_p_vals, empirical_p)
+abline(a = 0, b = 1, col = "red", lwd = 3)
+```
