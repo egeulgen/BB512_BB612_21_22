@@ -17,7 +17,7 @@ sched_df$HW[is.na(sched_df$HW)] <- ""
 
 # function for creating link
 link_to_file <- function(text, rel_path) {
-    URL <- paste0("https://github.com/egeulgen/BB512_BB612_21_22K/blob/main/", rel_path)
+    URL <- paste0("https://github.com/egeulgen/BB512_BB612_21_22/blob/main/", rel_path)
     new_text <- kableExtra::cell_spec(text, "html", link = URL)
     return(new_text)
 }

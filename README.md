@@ -31,7 +31,7 @@ R
 2022-03-03
 </td>
 <td style="text-align:left;">
-<a href="https://github.com/egeulgen/BB512_BB612_21_22K/blob/main/lectures/1.intro.pdf" style="     ">Introduction</a>
+<a href="https://github.com/egeulgen/BB512_BB612_21_22/blob/main/lectures/1.intro.pdf" style="     ">Introduction</a>
 </td>
 <td style="text-align:left;">
 </td>
@@ -46,13 +46,13 @@ R
 2022-03-10
 </td>
 <td style="text-align:left;">
-<a href="https://github.com/egeulgen/BB512_BB612_21_22K/blob/main/lectures/2.EDA.pdf" style="     ">Exploratory
+<a href="https://github.com/egeulgen/BB512_BB612_21_22/blob/main/lectures/2.EDA.pdf" style="     ">Exploratory
 Data Analysis</a>
 </td>
 <td style="text-align:left;">
 </td>
 <td style="text-align:left;">
-<a href="https://github.com/egeulgen/BB512_BB612_21_22K/blob/main/scripts/2.EDA.pdf" style="     ">EDA</a>
+<a href="https://github.com/egeulgen/BB512_BB612_21_22/blob/main/scripts/2.EDA.pdf" style="     ">EDA</a>
 </td>
 </tr>
 <tr>
@@ -63,14 +63,14 @@ Data Analysis</a>
 2022-03-17
 </td>
 <td style="text-align:left;">
-<a href="https://github.com/egeulgen/BB512_BB612_21_22K/blob/main/lectures/3.dim_reduction.pdf" style="     ">Clustering/Dimensionality
+<a href="https://github.com/egeulgen/BB512_BB612_21_22/blob/main/lectures/3.dim_reduction.pdf" style="     ">Clustering/Dimensionality
 Reduction</a>
 </td>
 <td style="text-align:left;">
-<a href="https://github.com/egeulgen/BB512_BB612_21_22K/blob/main/Homeworks/HW1.pdf" style="     ">HW1</a>
+<a href="https://github.com/egeulgen/BB512_BB612_21_22/blob/main/Homeworks/HW1.pdf" style="     ">HW1</a>
 </td>
 <td style="text-align:left;">
-<a href="https://github.com/egeulgen/BB512_BB612_21_22K/blob/main/scripts/3.Clustering_PCA.pdf" style="     ">Clustering</a>
+<a href="https://github.com/egeulgen/BB512_BB612_21_22/blob/main/scripts/3.Clustering_PCA.pdf" style="     ">Clustering</a>
 </td>
 </tr>
 <tr>
@@ -81,7 +81,7 @@ Reduction</a>
 2022-03-24
 </td>
 <td style="text-align:left;">
-<a href="https://github.com/egeulgen/BB512_BB612_21_22K/blob/main/Homeworks/HW1_KEY.pdf" style="     ">Review
+<a href="https://github.com/egeulgen/BB512_BB612_21_22/blob/main/Homeworks/HW1_KEY.pdf" style="     ">Review
 of HW1</a>
 </td>
 <td style="text-align:left;">
@@ -97,13 +97,13 @@ of HW1</a>
 2022-03-31
 </td>
 <td style="text-align:left;">
-<a href="https://github.com/egeulgen/BB512_BB612_21_22K/blob/main/lectures/5.batch.pdf" style="     ">Batch
+<a href="https://github.com/egeulgen/BB512_BB612_21_22/blob/main/lectures/5.batch.pdf" style="     ">Batch
 Effects and Confounders</a>
 </td>
 <td style="text-align:left;">
 </td>
 <td style="text-align:left;">
-<a href="https://github.com/egeulgen/BB512_BB612_21_22K/blob/main/scripts/5.BatchEffects.pdf" style="     ">Batch</a>
+<a href="https://github.com/egeulgen/BB512_BB612_21_22/blob/main/scripts/5.BatchEffects.pdf" style="     ">Batch</a>
 </td>
 </tr>
 <tr>
@@ -114,13 +114,13 @@ Effects and Confounders</a>
 2022-04-07
 </td>
 <td style="text-align:left;">
-<a href="https://github.com/egeulgen/BB512_BB612_21_22K/blob/main/lectures/6.inference.pdf" style="     ">Inference</a>
+<a href="https://github.com/egeulgen/BB512_BB612_21_22/blob/main/lectures/6.inference.pdf" style="     ">Inference</a>
 </td>
 <td style="text-align:left;">
-<a href="https://github.com/egeulgen/BB512_BB612_21_22K/blob/main/Homeworks/HW2.pdf" style="     ">HW2</a>
+<a href="https://github.com/egeulgen/BB512_BB612_21_22/blob/main/Homeworks/HW2.pdf" style="     ">HW2</a>
 </td>
 <td style="text-align:left;">
-<a href="https://github.com/egeulgen/BB512_BB612_21_22K/blob/main/scripts/6.Inference.pdf" style="     ">Inference</a>
+<a href="https://github.com/egeulgen/BB512_BB612_21_22/blob/main/scripts/6.Inference.pdf" style="     ">Inference</a>
 </td>
 </tr>
 <tr>
