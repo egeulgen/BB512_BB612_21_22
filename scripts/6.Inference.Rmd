@@ -6,7 +6,6 @@ output: pdf_document
 ```{r}
 suppressPackageStartupMessages(library(Biobase))
 suppressPackageStartupMessages(library(bladderbatch))
-suppressPackageStartupMessages(library(sva))
 ```
 
 # Data
@@ -24,6 +23,7 @@ fdata <- fData(bottomly.eset)
 ```
 
 Transform the expression data and remove lowly expressed genes:
+
 ```{r data_tr}
 edata <- log2(as.matrix(edata) + 1)
 edata <- edata[rowMeans(edata) > 10, ]
@@ -57,7 +57,7 @@ hist(p_vals)
 ## Adjusting for variables with `edge`
 
 ```{r edge}
-devtools::install_github("jdstorey/edge")
+# devtools::install_github("jdstorey/edge")
 library(edge)
 
 edge_study <- build_study(edata, grp = pdata$strain, 
@@ -67,7 +67,7 @@ qval <- qvalueObj(de_obj)
 hist(qval$pvalues)
 ```
 
-## Using moderated statistics with limma
+## Using moderated statistics with `limma`
 
 ```{r limma}
 library(limma)
@@ -101,7 +101,7 @@ hist(perm_res[, 1])
 abline(v = actual_diffs[1], col = "red", lwd = 2)
 
 # empirical p value
-sum(perm_res[, 1] <= actual_diffs[1]) / B
+2 * sum(perm_res[, 1] <= actual_diffs[1]) / B
 
 empirical_p <- c()
 for (j in 1:ncol(perm_res)) {
