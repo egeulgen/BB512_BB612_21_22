@@ -131,7 +131,8 @@ Effects and Confounders</a>
 2022-04-14
 </td>
 <td style="text-align:left;">
-Review of HW2
+<a href="https://github.com/egeulgen/BB512_BB612_21_22/blob/main/Homeworks/HW2_KEY.pdf" style="     ">Review
+of HW2</a>
 </td>
 <td style="text-align:left;">
 </td>

@@ -34,6 +34,7 @@ sched_df$Subject[3] <- link_to_file(sched_df$Subject[3], "lectures/3.dim_reducti
 sched_df$Subject[4] <- link_to_file(sched_df$Subject[4], "Homeworks/HW1_KEY.pdf")
 sched_df$Subject[5] <- link_to_file(sched_df$Subject[5], "lectures/5.batch.pdf")
 sched_df$Subject[6] <- link_to_file(sched_df$Subject[6], "lectures/6.inference.pdf")
+sched_df$Subject[7] <- link_to_file(sched_df$Subject[7], "Homeworks/HW2_KEY.pdf")
 
 # links to R exercises
 sched_df$R <- ""
