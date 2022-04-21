@@ -147,11 +147,13 @@ of HW2</a>
 2022-04-21
 </td>
 <td style="text-align:left;">
-Gene Set Enrichment
+<a href="https://github.com/egeulgen/BB512_BB612_21_22/blob/main/lectures/8.enrichment.pdf" style="     ">Gene
+Set Enrichment</a>
 </td>
 <td style="text-align:left;">
 </td>
 <td style="text-align:left;">
+<a href="https://github.com/egeulgen/BB512_BB612_21_22/blob/main/scripts/8.Enrichment.pdf" style="     ">Enrichment</a>
 </td>
 </tr>
 <tr>

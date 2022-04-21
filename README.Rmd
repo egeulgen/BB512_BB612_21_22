@@ -35,6 +35,7 @@ sched_df$Subject[4] <- link_to_file(sched_df$Subject[4], "Homeworks/HW1_KEY.pdf"
 sched_df$Subject[5] <- link_to_file(sched_df$Subject[5], "lectures/5.batch.pdf")
 sched_df$Subject[6] <- link_to_file(sched_df$Subject[6], "lectures/6.inference.pdf")
 sched_df$Subject[7] <- link_to_file(sched_df$Subject[7], "Homeworks/HW2_KEY.pdf")
+sched_df$Subject[8] <- link_to_file(sched_df$Subject[8], "lectures/8.enrichment.pdf")
 
 # links to R exercises
 sched_df$R <- ""
@@ -42,6 +43,7 @@ sched_df$R[2] <- link_to_file("EDA", "scripts/2.EDA.pdf")
 sched_df$R[3] <- link_to_file("Clustering", "scripts/3.Clustering_PCA.pdf")
 sched_df$R[5] <- link_to_file("Batch", "scripts/5.BatchEffects.pdf")
 sched_df$R[6] <- link_to_file("Inference", "scripts/6.Inference.pdf")
+sched_df$R[8] <- link_to_file("Enrichment", "scripts/8.Enrichment.pdf")
 
 kableExtra::row_spec(kableExtra::row_spec(knitr::kable(sched_df, format = "html", escape = FALSE), which(grepl("Midterm", sched_df$Subject)), bold = TRUE, background = "#F4B41A"), nrow(sched_df), bold = TRUE, background = "#E2725A")
 
