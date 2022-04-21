@@ -1,0 +1,58 @@
+---
+title: "BB512/BB612 - Week VIII"
+output: pdf_document
+---
+
+# ORA
+
+```{r}
+suppressPackageStartupMessages(library(enrichR))
+
+selected_genes <- c("PPARA", "FABP4", "PLTP", "PPARG", "RXRA", "ATRX", "TP53", "KRAS", "MYC")
+
+dbs <- listEnrichrDbs()
+head(dbs)
+dbs[grepl("KEGG", dbs$libraryName), ]
+dbs[grepl("GO", dbs$libraryName), ]
+
+res <- enrichr(selected_genes, databases = c("KEGG_2021_Human", "GO_Biological_Process_2017"))
+head(res$KEGG_2021_Human)
+head(res$GO_Biological_Process_2017)
+
+plotEnrich(res$KEGG_2021_Human)
+plotEnrich(res$GO_Biological_Process_2017)
+```
+
+# FCS
+
+```{r}
+suppressPackageStartupMessages(library(fgsea))
+data(examplePathways)
+data(exampleRanks)
+set.seed(42)
+
+head(examplePathways, 2)
+head(exampleRanks, 2)
+
+fgseaRes <- fgsea(pathways = examplePathways, 
+                  stats    = exampleRanks,
+                  minSize  = 15,
+                  maxSize  = 500)
+
+head(fgseaRes[order(pval), ])
+```
+
+# PT
+
+```{r}
+suppressPackageStartupMessages(library(pathfindR))
+head(RA_input)
+# RA_out_df <- run_pathfindR(RA_input, output_dir = tmp_dir)
+RA_out_df <- RA_output
+head(RA_out_df)
+enrichment_chart(RA_out_df)
+
+RA_clu_df <- cluster_enriched_terms(RA_out_df, method = "fuzzy")
+
+enrichment_chart(RA_clu_df, plot_by_cluster = TRUE, top_terms = 3)
+```
