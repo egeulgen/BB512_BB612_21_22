@@ -25,6 +25,7 @@ link_to_file <- function(text, rel_path) {
 # links to HWs
 sched_df$HW[3] <- link_to_file(sched_df$HW[3], "Homeworks/HW1.pdf")
 sched_df$HW[6] <- link_to_file(sched_df$HW[6], "Homeworks/HW2.pdf")
+sched_df$HW[9] <- link_to_file(sched_df$HW[9], "Homeworks/HW3.pdf")
 
 # links to lectures
 # links to lectures
@@ -36,6 +37,7 @@ sched_df$Subject[5] <- link_to_file(sched_df$Subject[5], "lectures/5.batch.pdf")
 sched_df$Subject[6] <- link_to_file(sched_df$Subject[6], "lectures/6.inference.pdf")
 sched_df$Subject[7] <- link_to_file(sched_df$Subject[7], "Homeworks/HW2_KEY.pdf")
 sched_df$Subject[8] <- link_to_file(sched_df$Subject[8], "lectures/8.enrichment.pdf")
+sched_df$Subject[9] <- link_to_file(sched_df$Subject[9], "lectures/9.GeneExpression.pdf")
 
 # links to R exercises
 sched_df$R <- ""
@@ -44,6 +46,7 @@ sched_df$R[3] <- link_to_file("Clustering", "scripts/3.Clustering_PCA.pdf")
 sched_df$R[5] <- link_to_file("Batch", "scripts/5.BatchEffects.pdf")
 sched_df$R[6] <- link_to_file("Inference", "scripts/6.Inference.pdf")
 sched_df$R[8] <- link_to_file("Enrichment", "scripts/8.Enrichment.pdf")
+sched_df$R[9] <- link_to_file("Gene Expresion", "scripts/9.GeneExpression.pdf")
 
 kableExtra::row_spec(kableExtra::row_spec(knitr::kable(sched_df, format = "html", escape = FALSE), which(grepl("Midterm", sched_df$Subject)), bold = TRUE, background = "#F4B41A"), nrow(sched_df), bold = TRUE, background = "#E2725A")
 

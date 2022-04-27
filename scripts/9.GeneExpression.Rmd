@@ -1,0 +1,315 @@
+---
+title: "BB512/BB612 - Week IX"
+output: pdf_document
+---
+
+```{r}
+suppressPackageStartupMessages(library(limma))
+suppressPackageStartupMessages(library(edgeR))
+suppressPackageStartupMessages(library(Mus.musculus))
+```
+
+# Microarray
+
+We'll analyze [GSE73577](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE73577) "Gene expression profiles in nineteen Kawasaki Disease (KD) patients before and after intravenous immunoglobulin (IVIG) treatment".
+
+```{r GEO2R}
+# Version info: R 3.2.3, Biobase 2.30.0, GEOquery 2.40.0, limma 3.26.8
+################################################################
+#   Differential expression analysis with limma
+library(GEOquery)
+library(limma)
+library(umap)
+
+# load series and platform data from GEO
+
+gset <- getGEO("GSE73577", GSEMatrix =TRUE, AnnotGPL=TRUE)
+if (length(gset) > 1) idx <- grep("GPL4133", attr(gset, "names")) else idx <- 1
+gset <- gset[[idx]]
+
+# make proper column names to match toptable 
+fvarLabels(gset) <- make.names(fvarLabels(gset))
+
+# group membership for all samples
+gsms <- "00000000001000000000000000000100000000"
+sml <- strsplit(gsms, split="")[[1]]
+
+ex_org <- exprs(gset)
+# quantile normalization
+ex <- preprocessCore::normalize.quantiles(ex_org, copy = TRUE)
+colnames(ex) <- colnames(ex_org)
+rownames(ex) <- rownames(ex_org)
+
+# log2 transformation
+qx <- as.numeric(quantile(ex, c(0., 0.25, 0.5, 0.75, 0.99, 1.0), na.rm=T))
+LogC <- (qx[5] > 100) ||
+          (qx[6]-qx[1] > 50 && qx[2] > 0)
+if (LogC) { ex[which(ex <= 0)] <- NaN
+  exprs(gset) <- log2(ex) }
+
+# assign samples to groups and set up design matrix
+gs <- factor(sml)
+groups <- make.names(c("day3","day4"))
+levels(gs) <- groups
+gset$group <- gs
+design <- model.matrix(~group + 0, gset)
+colnames(design) <- levels(gs)
+
+fit <- lmFit(gset, design)  # fit linear model
+
+# set up contrasts of interest and recalculate model coefficients
+cts <- paste(groups[1], groups[2], sep="-")
+cont.matrix <- makeContrasts(contrasts=cts, levels=design)
+fit2 <- contrasts.fit(fit, cont.matrix)
+
+# compute statistics and table of top significant genes
+fit2 <- eBayes(fit2, 0.01)
+tT <- topTable(fit2, adjust="fdr", sort.by="B", number=250)
+
+tT <- subset(tT, select=c("ID","adj.P.Val","P.Value","t","B","logFC","Gene.symbol","Gene.title"))
+head(tT)
+
+# Visualize and quality control test results.
+# Build histogram of P-values for all genes. Normal test
+# assumption is that most genes are not differentially expressed.
+tT2 <- topTable(fit2, adjust="fdr", sort.by="B", number=Inf)
+hist(tT2$adj.P.Val, col = "grey", border = "white", xlab = "P-adj",
+  ylab = "Number of genes", main = "P-adj value distribution")
+
+# summarize test results as "up", "down" or "not expressed"
+dT <- decideTests(fit2, adjust.method="fdr", p.value=0.05)
+
+# Venn diagram of results
+vennDiagram(dT, circle.col=palette())
+
+# create Q-Q plot for t-statistic
+t.good <- which(!is.na(fit2$F)) # filter out bad probes
+qqt(fit2$t[t.good], fit2$df.total[t.good], main="Moderated t statistic")
+
+# volcano plot (log P-value vs log fold change)
+colnames(fit2) # list contrast names
+ct <- 1        # choose contrast of interest
+volcanoplot(fit2, coef=ct, main=colnames(fit2)[ct], pch=20,
+  highlight=length(which(dT[,ct]!=0)), names=rep('+', nrow(fit2)))
+
+# MD plot (log fold change vs mean log expression)
+# highlight statistically significant (p-adj < 0.05) probes
+plotMD(fit2, column=ct, status=dT[,ct], legend=F, pch=20, cex=1)
+abline(h=0)
+```
+
+
+# RNAseq
+
+Adapted from this vignettte: [(https://bioconductor.org/packages/release/workflows/vignettes/RNAseq123/inst/doc/limmaWorkflow.html](https://bioconductor.org/packages/release/workflows/vignettes/RNAseq123/inst/doc/limmaWorkflow.html)
+
+## Data
+To get started with this analysis, we'll download the raw file for [GSE63310](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE63310), and extract the relevant files from this archive. We'll use 9 samples.
+
+```{r data}
+url <- "https://www.ncbi.nlm.nih.gov/geo/download/?acc=GSE63310&format=file"
+tmp_file <- file.path(tempdir(), "GSE63310_RAW.tar")
+download.file(url, destfile = tmp_file, mode = "wb") 
+untar(tmp_file, exdir = dirname(tmp_file))
+
+files <- c("GSM1545535_10_6_5_11.txt.gz", "GSM1545536_9_6_5_11.txt.gz", 
+   "GSM1545538_purep53.txt.gz", "GSM1545539_JMS8-2.txt.gz", 
+   "GSM1545540_JMS8-3.txt.gz", "GSM1545541_JMS8-4.txt.gz", 
+   "GSM1545542_JMS8-5.txt.gz", "GSM1545544_JMS9-P7c.txt.gz", 
+   "GSM1545545_JMS9-P8c.txt.gz")
+files <- file.path(dirname(tmp_file), files)
+```
+
+While each of the text files can be read into R separately and combined into a matrix of counts, `edgeR` offers a convenient way to do this in one step using the `readDGE()` function. The resulting `DGEList-object` contains a matrix of counts with 27179 rows associated with unique Entrez gene identifiers (IDs) and 9 columns associated with the individual samples in the experiment.
+
+```{r DGEList}
+read.delim(files[1], nrow = 5)
+
+x <- readDGE(files, columns=c(1,3))
+class(x)
+dim(x)
+```
+
+## Organize Sample Information
+
+```{r sample_info}
+samplenames <- substring(basename(colnames(x)), 12, nchar(basename(colnames(x))) - 4)
+samplenames 
+
+colnames(x) <- samplenames
+
+group <- as.factor(c("LP", "ML", "Basal", "Basal", "ML", "LP", 
+                     "Basal", "ML", "LP"))
+x$samples$group <- group
+lane <- as.factor(rep(c("L004","L006","L008"), c(3, 4, 2)))
+x$samples$lane <- lane
+x$samples
+```
+
+## Organize Gene Annotations
+
+A second data frame named genes in the DGEList-object is used to store gene-level information associated with rows of the counts matrix. This information can be retrieved using organism specific packages such as Mus.musculus for mouse (or Homo.sapiens for human) or the biomaRt package which interfaces the Ensembl genome databases in order to perform gene annotation.
+
+The type of information that can be retrieved includes gene symbols, gene names, chromosome names and locations, Entrez gene IDs, Refseq gene IDs and Ensembl gene IDs to name just a few. biomaRt primarily works off Ensembl gene IDs, whereas Mus.musculus packages information from various sources and allows users to choose between many different gene IDs as the key.
+
+The Entrez gene IDs available in our dataset were annotated using the Mus.musculus package to retrieve associated gene symbols and chromosome information.
+
+```{r gene_annot}
+geneid <- rownames(x)
+genes <- select(Mus.musculus, keys = geneid, columns=c("SYMBOL", "TXCHROM"), 
+                keytype="ENTREZID")
+head(genes)
+
+# keeping only the first occurrence of each gene ID:
+genes <- genes[!duplicated(genes$ENTREZID),]
+
+x$genes <- genes
+x
+```
+
+## Data Pre-processing
+
+For differential expression and related analyses, gene expression is rarely considered at the level of raw counts since libraries sequenced at a greater depth will result in higher counts. Rather, it is common practice to transform raw counts onto a scale that accounts for such library size differences. Popular transformations include counts per million (CPM), log2-counts per million (log-CPM), reads per kilobase of transcript per million (RPKM), and fragments per kilobase of transcript per million (FPKM).
+
+Here raw counts are converted to CPM and log-CPM values using the cpm function in edgeR. RPKM values are just as easily calculated as CPM values using the rpkm function in edgeR if gene lengths are available.
+
+```{r cpm}
+cpm <- cpm(x)
+lcpm <- cpm(x, log=TRUE)
+summary(lcpm)
+```
+
+The log-CPM values will be used for exploratory plots. When log=TRUE, the cpm function adds an offset to the CPM values before converting to the log2-scale. By default, the offset is 2/L where 2 is the “prior count” and L is the average library size in millions, so the log-CPM values are related to the CPM values by log2(CPM + 2/L).
+
+For this dataset, the average library size is about 45.5 million, so L approx. 45.5 and the minimum log-CPM value for each sample becomes log2(2/45.5) = -4.51. In other words, a count of zero for this data maps to a log-CPM value of -4.51 after adding the prior count or offset:
+
+```{r LM}
+L <- mean(x$samples$lib.size) * 1e-6
+M <- median(x$samples$lib.size) * 1e-6
+c(L, M)
+```
+
+## Removing Lowly Expressed Genes
+
+```{r filter}
+table(rowSums(x$counts==0)==9)
+
+keep.exprs <- filterByExpr(x, group = group)
+x <- x[keep.exprs, , keep.lib.sizes = FALSE]
+dim(x)
+```
+
+By default, the function keeps genes with about 10 read counts or more in a minimum number of samples, where the number of samples is chosen according to the minimum group sample size.
+
+```{r qc}
+lcpm.cutoff <- log2(10/M + 2/L)
+library(RColorBrewer)
+nsamples <- ncol(x)
+col <- brewer.pal(nsamples, "Paired")
+par(mfrow=c(1,2))
+
+plot(density(lcpm[,1]), col=col[1], lwd=2, ylim=c(0,0.26), las=2, main="", xlab="")
+title(main="A. Raw data", xlab="Log-cpm")
+abline(v=lcpm.cutoff, lty=3)
+for (i in 2:nsamples){
+den <- density(lcpm[,i])
+lines(den$x, den$y, col=col[i], lwd=2)
+}
+legend("topright", samplenames, text.col=col, bty="n")
+
+
+lcpm <- cpm(x, log=TRUE)
+plot(density(lcpm[,1]), col=col[1], lwd=2, ylim=c(0,0.26), las=2, main="", xlab="")
+title(main="B. Filtered data", xlab="Log-cpm")
+abline(v=lcpm.cutoff, lty=3)
+for (i in 2:nsamples){
+den <- density(lcpm[,i])
+lines(den$x, den$y, col=col[i], lwd=2)
+}
+legend("topright", samplenames, text.col=col, bty="n")
+```
+
+## Normalization
+
+Normalisation by the method of trimmed mean of M-values (TMM) is performed using the `calcNormFactors` function in `edgeR`. The normalization factors calculated here are used as a scaling factor for the library sizes. When working with DGEList-objects, these normalization factors are automatically stored in `x$samples$norm.factors`. For this dataset, the effect of TMM-normalisation is mild, as evident in the magnitude of the scaling factors, which are all relatively close to 1.
+
+```{r norm}
+x <- calcNormFactors(x, method = "TMM")
+x$samples$norm.factors
+```
+
+## Unsupervised clustering of samples
+
+```{r MDS}
+lcpm <- cpm(x, log=TRUE)
+par(mfrow=c(1,2))
+col.group <- group
+levels(col.group) <-  brewer.pal(nlevels(col.group), "Set1")
+col.group <- as.character(col.group)
+col.lane <- lane
+levels(col.lane) <-  brewer.pal(nlevels(col.lane), "Set2")
+col.lane <- as.character(col.lane)
+plotMDS(lcpm, labels=group, col=col.group)
+title(main="A. Sample groups")
+plotMDS(lcpm, labels=lane, col=col.lane, dim=c(3,4))
+title(main="B. Sequencing lanes")
+```
+
+## Differential Expression Analysis
+
+### Creating a design matrix and contrasts
+
+```{r dmat}
+design <- model.matrix(~0 + group + lane)
+colnames(design) <- gsub("group", "", colnames(design))
+design
+```
+
+```{r cmat}
+contr.matrix <- makeContrasts(
+   BasalvsLP = Basal-LP, 
+   BasalvsML = Basal - ML, 
+   LPvsML = LP - ML, 
+   levels = colnames(design))
+contr.matrix
+```
+
+### Removing Heteroscedascity from Count Data
+
+```{r voom}
+v <- voom(x, design, plot=TRUE)
+v
+```
+
+```{r voom2}
+vfit <- lmFit(v, design)
+vfit <- contrasts.fit(vfit, contrasts = contr.matrix)
+efit <- eBayes(vfit)
+plotSA(efit, main="Final model: Mean-variance trend")
+```
+
+### Examining the number of DEGs
+
+```{r deg_no}
+summary(decideTests(efit))
+```
+
+```{r volcano}
+volcanoplot(efit, coef = 1)
+```
+
+```{r ttable}
+basal.vs.lp <- topTreat(efit, coef = 1, n = Inf)
+head(basal.vs.lp)
+```
+
+```{r hmap}
+library(gplots)
+basal.vs.lp.topgenes <- basal.vs.lp$ENTREZID[1:100]
+i <- which(v$genes$ENTREZID %in% basal.vs.lp.topgenes)
+mycol <- colorpanel(1000,"blue","white","red")
+# heatmap.2(lcpm[i,], scale="row",
+#    labRow=v$genes$SYMBOL[i], labCol=group, 
+#    col=mycol, trace="none", density.info="none", 
+#    margin=c(8,6), lhei=c(2,10), dendrogram="column")
+```

@@ -164,12 +164,15 @@ Set Enrichment</a>
 2022-04-28
 </td>
 <td style="text-align:left;">
-Gene Expression Analysis
+<a href="https://github.com/egeulgen/BB512_BB612_21_22/blob/main/lectures/9.GeneExpression.pdf" style="     ">Gene
+Expression Analysis</a>
 </td>
 <td style="text-align:left;">
-HW3
+<a href="https://github.com/egeulgen/BB512_BB612_21_22/blob/main/Homeworks/HW3.pdf" style="     ">HW3</a>
 </td>
 <td style="text-align:left;">
+<a href="https://github.com/egeulgen/BB512_BB612_21_22/blob/main/scripts/9.GeneExpression.pdf" style="     ">Gene
+Expresion</a>
 </td>
 </tr>
 <tr>
