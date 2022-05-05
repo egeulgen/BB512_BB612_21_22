@@ -38,6 +38,7 @@ sched_df$Subject[6] <- link_to_file(sched_df$Subject[6], "lectures/6.inference.p
 sched_df$Subject[7] <- link_to_file(sched_df$Subject[7], "Homeworks/HW2_KEY.pdf")
 sched_df$Subject[8] <- link_to_file(sched_df$Subject[8], "lectures/8.enrichment.pdf")
 sched_df$Subject[9] <- link_to_file(sched_df$Subject[9], "lectures/9.GeneExpression.pdf")
+sched_df$Subject[10] <- link_to_file(sched_df$Subject[10], "Homeworks/HW3_KEY.pdf")
 
 # links to R exercises
 sched_df$R <- ""
