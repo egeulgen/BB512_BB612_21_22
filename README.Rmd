@@ -26,6 +26,7 @@ link_to_file <- function(text, rel_path) {
 sched_df$HW[3] <- link_to_file(sched_df$HW[3], "Homeworks/HW1.pdf")
 sched_df$HW[6] <- link_to_file(sched_df$HW[6], "Homeworks/HW2.pdf")
 sched_df$HW[9] <- link_to_file(sched_df$HW[9], "Homeworks/HW3.pdf")
+sched_df$HW[11] <- link_to_file(sched_df$HW[11], "Homeworks/FINAL_PROJECT.pdf")
 
 # links to lectures
 # links to lectures
@@ -39,6 +40,7 @@ sched_df$Subject[7] <- link_to_file(sched_df$Subject[7], "Homeworks/HW2_KEY.pdf"
 sched_df$Subject[8] <- link_to_file(sched_df$Subject[8], "lectures/8.enrichment.pdf")
 sched_df$Subject[9] <- link_to_file(sched_df$Subject[9], "lectures/9.GeneExpression.pdf")
 sched_df$Subject[10] <- link_to_file(sched_df$Subject[10], "Homeworks/HW3_KEY.pdf")
+sched_df$Subject[11] <- link_to_file(sched_df$Subject[11], "lectures/11.NGS_analysis.pdf")
 
 # links to R exercises
 sched_df$R <- ""

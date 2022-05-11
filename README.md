@@ -199,10 +199,12 @@ of HW3</a>
 2022-05-12
 </td>
 <td style="text-align:left;">
-Next Generation Genomics Sequencing Analysis
+<a href="https://github.com/egeulgen/BB512_BB612_21_22/blob/main/lectures/11.NGS_analysis.pdf" style="     ">Next
+Generation Genomics Sequencing Analysis</a>
 </td>
 <td style="text-align:left;">
-Final project
+<a href="https://github.com/egeulgen/BB512_BB612_21_22/blob/main/Homeworks/FINAL_PROJECT.pdf" style="     ">Final
+project</a>
 </td>
 <td style="text-align:left;">
 </td>
